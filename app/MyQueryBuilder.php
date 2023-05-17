@@ -46,12 +46,17 @@ class MyQueryBuilder {
         return $this;
     }
 
-    public function from(string $table): MyQueryBuilder {
-        $this->query .= ' FROM' . $table;
+    public function OrderBy(string $column, $attribute = ''): MyQueryBuilder {
+        $this->query .= ' ORDER BY ' . $column . ' ' . $attribute;
         return $this;
     }
 
-    public function where(string $columns, string $operator, mixed $value): MyQueryBuilder {
+    public function from(string $table): MyQueryBuilder {
+        $this->query .= ' FROM ' . $table;
+        return $this;
+    }
+
+    public function where( $columns, $operator, mixed $value): MyQueryBuilder {
         $this->query .= ' WHERE ' . $columns . ' ' . $operator . ' ' . $value;
         return $this;
     }
