@@ -20,48 +20,48 @@ class MyQueryBuilder {
         $this->query = '';
     }
 
-    public function select($columns) {
+    public function select(array $columns): MyQueryBuilder {
         foreach ($columns as $column) {
             $this->query = 'SELECT ' . $column;
         }
         return $this;
     }
 
-    public function update($table) {
+    public function update(string $table): MyQueryBuilder {
         $this->query = 'UPDATE ' . $table;
         return $this;
     }
 
-    public function set($column, $value) {
+    public function set(string $column, mixed $value): MyQueryBuilder {
         $this->query .= ' SET ' . $column . ' = ' . "'$value'";
         return $this;
     }
-     public function insert($table, $name, $login, $pass, $age){
+     public function insert(string $table, mixed $name, mixed $login, mixed $pass, int $age): MyQueryBuilder{
 
         $this->query = "INSERT INTO $table  VALUES ('$name','$login', '$pass', $age)";
         return $this;
     }
-     public function delete() {
+     public function delete(): MyQueryBuilder {
         $this->query = 'DELETE ';
         return $this;
     }
 
-    public function from($table) {
+    public function from(string $table): MyQueryBuilder {
         $this->query .= ' FROM' . $table;
         return $this;
     }
 
-    public function where($columns, $operator, $value) {
+    public function where(string $columns, string $operator, mixed $value): MyQueryBuilder {
         $this->query .= ' WHERE ' . $columns . ' ' . $operator . ' ' . $value;
         return $this;
     }
 
-    public function limit($limit) {
+    public function limit(int $limit): MyQueryBuilder {
         $this->query .= " LIMIT $limit";
         return $this;
     }
 
-    public function execute() {
+    public function execute(): array{
         $statement = $this->connection->prepare($this->query);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
